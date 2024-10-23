@@ -10,6 +10,15 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
+.checkoutProduct {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Add transform transition */
+}
+
+.checkoutProduct.removed {
+    opacity: 0; /* Fade out */
+    transform: translateX(50px); /* Move to the right */
+}
+
 
 .checkoutProduct__info {
     padding-left: 20px

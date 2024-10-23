@@ -4,11 +4,21 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useStateValue } from "./StateProvider";
 import { useEffect } from 'react';
+import { auth } from './firebase'; 
+import { signOut } from 'firebase/auth';
 
 
 function Header() {
     const [isBouncing, setIsBouncing] = useState(false);
-    const [{ basket }] = useStateValue();
+    const [{ basket,user }] = useStateValue();
+
+
+    const handleSignout = () =>{
+      if(user){
+        signOut(auth);
+      }
+
+    }
 
     useEffect(() => {
         if (basket?.length > 0) {
@@ -43,11 +53,13 @@ function Header() {
       </div>
 
       <div className='header__nav'>
-        <div className='header__option'>
-            <span className='header__optionLineOne'>Hello</span>
-            <span className='header__optionLineTwo'>Sign In</span>
+        <Link to={!user && '/login'}>
+        <div className='header__option' onClick={handleSignout}>
+            <span className='header__optionLineOne'>Hello {user ? user.email : 'Guest'}</span>
+            <span className='header__optionLineTwo'>{user ? 'Sign Out' : 'Sign In'}</span>
 
         </div>
+        </Link>
 
         <div className='header__option'>
             <span className='header__optionLineOne'>Returns</span>
